@@ -2,7 +2,6 @@ import './App.css'
 import { Layout} from 'antd'
 import { Navbar } from './components/Navbar'
 import { AppRouter } from './components/AppRouter'
-import { Content } from 'antd/es/layout/layout'
 import { useEffect } from 'react'
 import { useActions } from './hooks/useActions'
 import type { IUser } from './models/types'
@@ -24,9 +23,9 @@ export const App = () => {
       <Layout.Header>
         <Navbar />
       </Layout.Header>
-      <Content>
+      <Layout.Content>
       <AppRouter />
-      </Content>
+      </Layout.Content>
     </Layout>
   )
 }
