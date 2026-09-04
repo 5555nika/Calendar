@@ -21,13 +21,20 @@ export const EventForm = ({ guests, onAdd }: IEventForm) => {
 
     const handleSubmit = () => {
         onAdd(event)
+        setEvent({
+            description: '',
+            date: '',
+            guest: '',
+        } as IEvent);
+
     }
 
     const selectDate = (date: Dayjs | null) => {
         if (date) {
-        setEvent({...event, date: date.format('YYYY-MM-DD')}) 
-        }
+        const formatDate = date.format('YYYY-MM-DD')
+        setEvent({...event, date: formatDate}) 
     }
+}
 
     return (
         <Form onFinish={handleSubmit}>
@@ -45,7 +52,7 @@ export const EventForm = ({ guests, onAdd }: IEventForm) => {
             name='date'
             rules={[rules.required()]}
             >
-                <DatePicker onChange={(date) => selectDate(date)}  style={{ width: '100%' }} />
+                <DatePicker onChange={selectDate}  style={{ width: '100%' }} />
             </Form.Item>
 
             <Form.Item
@@ -70,3 +77,21 @@ export const EventForm = ({ guests, onAdd }: IEventForm) => {
         </Form>
     )
 }
+
+
+/*
+const [form] = Form.useForm();
+  // ВОТ ОН — ОДИН ЕДИНСТВЕННЫЙ ДИНАМИЧЕСКИЙ ОБРАБОТЧИК:
+    const handleSubmit = (values: any) => {
+    // 1. values.date — это объект dayjs. Мы форматируем его в строку:
+    const formatedDate = values.date.format('YYYY.MM.DD');
+    // 2. Отдаем готовый объект наверх родителю:
+    onAdd({
+        description: values.description,
+        date: formatedDate,
+        guest: values.guest,
+    } as IEvent);
+    // 3. Очищаем форму:
+    form.resetFields();
+    };
+*/
